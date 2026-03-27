@@ -1,0 +1,73 @@
+[LAB1-1 Hotspots]
+Elapsed Time: 71.929 s
+CPU Time: 69.751 s
+Total Thread Count: 1
+
+Top Hotspots:
+dot_row_major: 34.846 s (50.0%)
+dot_naive_col: 34.612 s (49.6%)
+
+Bottom-up:
+dot_row_major and dot_naive_col are stably identified as the top two functions.
+
+Interpretation:
+1. 程序主要 CPU 开销集中在两个矩阵内积核心函数中，热点定位成功。
+2. 程序为单线程执行，因此 CPU 利用率主要集中在 1 个逻辑 CPU 上是正常现象。
+3. 该结果来自整套 benchmark 的累计采样，不能直接等价为固定规模下单次调用性能比较；算法优劣仍以 benchmark 数据和 speedup 曲线为准。
+
+[LAB1-1 HEBS add-on]
+Tool:
+VTune Hotspots -> Hardware Event-Based Sampling
+
+Status:
+硬件事件采样已尝试并完成采集，但在当前工具版本与编译优化条件下，文本/结果归因存在一定噪声，
+部分事件统计更容易落到 STL/内联辅助代码而不是核心函数本身。
+
+Usable conclusion:
+1. HEBS 作为补充 profiling 已完成尝试。
+2. 主要结论仍以 benchmark 曲线和 Hotspots 的核心函数定位为主。
+3. 结合算法理论分析，可以推断逐列访问的 naive 算法 cache 行为更差，而逐行访问的 row-major 算法空间局部性更好。
+
+为进一步从硬件层面解释矩阵与向量内积实验的性能差异，尝试使用 VTune 的 Hardware Event-Based Sampling 对程序进行补充剖析。由于当前工具版本与编译优化条件下，部分硬件事件的函数级归因存在一定噪声，因此该部分结果主要作为补充参考，而不作为主要定量依据。结合 benchmark 与 Hotspots 结果可知，程序主要开销集中在 dot_naive_col 与 dot_row_major 两个核心函数中；再结合理论分析，逐列访问与 C/C++ 行主存储不匹配，更容易造成较差的 cache 局部性，而逐行访问更能发挥 cache 的作用，因此优化算法在大规模问题下表现更优。
+
+
+
+
+[LAB1-2 Microarchitecture - serial]
+n=1048576, repeats=500
+
+Summary:
+Clockticks = 4,406,400,000
+Instructions Retired = 6,460,800,000
+CPI = 0.682
+
+Bottom-up:
+Function = sum_chain
+CPU Time = 2.261 s
+Clockticks = 4,313,600,000
+Instructions Retired = 6,307,200,000
+CPI = 0.684
+
+[LAB1-2 Microarchitecture - two]
+n=1048576, repeats=500
+
+Summary:
+Clockticks = 2,268,800,000
+Instructions Retired = 5,932,800,000
+CPI = 0.382
+
+Bottom-up:
+Function = sum_two_way
+CPU Time = 1.163 s
+Clockticks = 2,182,400,000
+Instructions Retired = 5,772,800,000
+CPI = 0.378
+
+Interpretation:
+1. two-way 与 serial 的指令数处于相近量级。
+2. two-way 的时钟周期数明显减少，约为 serial 的一半左右。
+3. two-way 的 CPI 从 0.682 降到 0.382，说明平均每条指令消耗的周期数更少。
+4. 对应 IPC 约由 1.47 提升到 2.62，说明两条独立累加链更能发挥 CPU 的超标量执行能力。
+5. 该结果与 benchmark 中 two-way 相对 chain 获得接近 2 倍加速的现象一致。
+
+在 Microarchitecture Exploration 分析中，普通链式累加与两路链式累加的执行指令数处于相近量级，但两路链式累加的执行周期数明显更低。具体而言，serial 的 Clockticks 为 4.4064×10^9，Instructions Retired 为 6.4608×10^9，CPI 为 0.682；而 two-way 的 Clockticks 降为 2.2688×10^9，Instructions Retired 为 5.9328×10^9，CPI 降至 0.382。由 IPC = 1 / CPI 可知，serial 的 IPC 约为 1.47，而 two-way 的 IPC 约为 2.62。说明两路链式累加将一条长依赖链拆分为两条独立的求和链后，CPU 能够在同一时间更充分地发射和执行独立指令，从而更好地利用超标量架构。这与 benchmark 中 two-way 相对 chain 获得接近 2 倍加速的结果一致。
