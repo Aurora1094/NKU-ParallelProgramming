@@ -1,0 +1,24 @@
+flat_scan.h:14:26: optimized: loop vectorized using 16 byte vectors
+flat_scan.h:10:22: optimized: basic block part vectorized using 16 byte vectors
+/usr/include/c++/10.3.1/ostream:391:19: optimized: basic block part vectorized using 16 byte vectors
+/usr/include/c++/10.3.1/istream:608:19: optimized: basic block part vectorized using 16 byte vectors
+/usr/include/c++/10.3.1/istream:608:19: optimized: basic block part vectorized using 16 byte vectors
+v_auto_flat_scan.h:24:26: optimized: loop vectorized using 16 byte vectors
+hnswlib/hnswlib/hnswalg.h:235:9: optimized: basic block part vectorized using 16 byte vectors
+hnswlib/hnswlib/hnswalg.h:452:38: optimized: basic block part vectorized using 16 byte vectors
+/usr/include/c++/10.3.1/bits/vector.tcc:69:7: optimized: basic block part vectorized using 16 byte vectors
+/usr/include/c++/10.3.1/ext/new_allocator.h:115:41: optimized: basic block part vectorized using 16 byte vectors
+hnswlib/hnswlib/hnswalg.h:1119:41: optimized: basic block part vectorized using 16 byte vectors
+/usr/include/c++/10.3.1/bits/hashtable.h:1574:7: optimized: basic block part vectorized using 16 byte vectors
+/usr/include/c++/10.3.1/ext/new_allocator.h:115:41: optimized: basic block part vectorized using 16 byte vectors
+/usr/include/c++/10.3.1/bits/stl_vector.h:346:18: optimized: basic block part vectorized using 16 byte vectors
+/usr/include/c++/10.3.1/ext/new_allocator.h:115:41: optimized: basic block part vectorized using 16 byte vectors
+/usr/include/c++/10.3.1/bits/atomic_base.h:404:18: optimized: basic block part vectorized using 16 byte vectors
+hnswlib/hnswlib/hnswalg.h:126:46: optimized: basic block part vectorized using 16 byte vectors
+/usr/include/c++/10.3.1/ext/new_allocator.h:115:41: optimized: basic block part vectorized using 16 byte vectors
+hnswlib/hnswlib/visited_list_pool.h:47:56: optimized: basic block part vectorized using 16 byte vectors
+/usr/include/c++/10.3.1/ostream:391:19: optimized: basic block part vectorized using 16 byte vectors
+hnswlib/hnswlib/hnswlib.h:210:10: optimized: basic block part vectorized using 16 byte vectors
+hnswlib/hnswlib/hnswalg.h:328:27: optimized: basic block part vectorized using 16 byte vectors
+/usr/include/c++/10.3.1/bits/atomic_base.h:426:24: optimized: basic block part vectorized using 16 byte vectors
+hnswlib/hnswlib/hnswalg.h:326:38: optimized: basic block part vectorized using 16 byte vectors
