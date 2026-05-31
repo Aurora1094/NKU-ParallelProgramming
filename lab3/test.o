@@ -1,0 +1,35 @@
+num_threads_for_search: 8
+pthread num_threads: 8
+method: IVF-PQ-SIMD + Pthread query-level parallelism
+ivf_nlist: 256, ivf_nprobe: 16, ivf_train_samples: 10000, ivf_kmeans_iters: 3
+ivf index build time (us): 1.03427e+06
+ivf list min length: 18
+ivf list max length: 2877
+ivf list avg length: 390.625
+pq build train threads: 4
+pq train thread 0 processed subspaces: 1
+pq train thread 1 processed subspaces: 1
+pq train thread 2 processed subspaces: 1
+pq train thread 3 processed subspaces: 1
+pq encode threads: 4
+pq encode thread 0 processed base vectors: 25000
+pq encode thread 1 processed base vectors: 25000
+pq encode thread 2 processed base vectors: 25000
+pq encode thread 3 processed base vectors: 25000
+pq_M: 4, pq_Ks: 256, pq_train_samples: 10000, pq_kmeans_iters: 3, rerank_p: 200
+pq_build_threads: 4
+pq index build time (us): 923707
+thread 0 processed queries: 250
+thread 1 processed queries: 250
+thread 2 processed queries: 250
+thread 3 processed queries: 250
+thread 4 processed queries: 250
+thread 5 processed queries: 250
+thread 6 processed queries: 250
+thread 7 processed queries: 250
+average recall: 0.99885
+average latency (us): 343.751
+wall latency per query (us): 61.6862
+total wall time (us): 123372
+
+Authorized users only. All activities may be monitored and reported.
